@@ -31,18 +31,7 @@ public:
     void set_selection(Select* new_select);
 
     // TODO: Implement print_selection.
-    void print_selection(std::ostream& out) const
-    {
-        if (select == nullptr) {
-            for (unsigned i = 0; i < data.size(); ++i) {
-                for (unsigned j = 0; j < column_names.size(); ++j) {
-                    out << data.at(i).at(j) << " ";
-                }
-                out << std::endl;
-            }
-        }
-
-    }
+    void print_selection(std::ostream& out) const;
 
     int getnumRows() {
         return this->data.size();
