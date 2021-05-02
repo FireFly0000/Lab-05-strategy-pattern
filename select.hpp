@@ -1,7 +1,9 @@
 #ifndef __SELECT_HPP__
 #define __SELECT_HPP__
-
+#include <iostream>
+#include <string>
 #include <cstring>
+#include "spreadsheet.hpp"
 
 class Select
 {
@@ -19,7 +21,7 @@ public:
 // a string) and implements the original interface in terms of this.  Derived
 // classes need only implement the new select function.  You may choose to
 // derive from Select or Select_Column at your convenience.
-class Select_Column: public Select
+class Select_Column : public Select
 {
 protected:
     int column;
@@ -31,11 +33,52 @@ public:
 
     virtual bool select(const Spreadsheet* sheet, int row) const
     {
-        return select(sheet->cell_data(row, column));
+        return select(sheet->cell_data(row, column)); 
     }
 
     // Derived classes can instead implement this simpler interface.
     virtual bool select(const std::string& s) const = 0;
+};
+
+
+
+
+// WORK IN PROGRESS!!
+class Select_Contains : public Select 
+{
+protected:
+    int column;
+    std::string _userstring;
+
+public:
+   bool select(const std::string& s) const
+   {
+       if (s.find(_userstring) != std::string::npos) { // if _userstring is a substring of s, then select returns true
+           return true;
+       }
+       else {
+           return false;
+       }
+   }
+
+   bool select(const Spreadsheet* sheet, int row) const {
+       return select(sheet->cell_data(row, this->column));
+    }
+
+    Select_Contains(Spreadsheet* sheet, std::string column, std::string userstring) 
+    {    
+        //sheet->set_selection(nullptr); // clear selections, probably not needed here.
+        this->_userstring = userstring;
+        this->column = sheet->get_column_by_name(column);
+        for (int i = 1; i < sheet->getnumRows(); ++i) // start at 1st row after column names, end once final roww has been reached. Not sure if gets correct size.
+        {
+                select(sheet->cell_data(i, this->column)); // query each row to see if it should be selected
+                // ??? do more stuff ???
+        }
+
+    }
+    
+
 };
 
 #endif //__SELECT_HPP__
