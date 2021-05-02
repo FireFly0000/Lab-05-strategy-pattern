@@ -103,6 +103,9 @@ protected:
     Select* _selectptr;
 
 public:
+    ~Select_Not(){
+	delete _selectptr;
+    } 
     bool select(const std::string& s) const
     {
         if (s.find(_userstring) == std::string::npos) { // if _userstring is not a substring of s, then select returns true
@@ -162,6 +165,11 @@ protected:
     Select* _selectptrright;
 
 public:
+   ~Select_And(){
+        delete _selectptrleft;
+	delete _selectptrright;
+    }
+
     bool select(Select* selectptrleft, Select* selectptrright, int row) const
     {
         if ((selectptrleft->select(selectptrleft->getSpreadsheet(), row) == true) && 
@@ -215,6 +223,11 @@ protected:
     Select* _selectptrright;
 
 public:
+    ~Select_Or(){
+        delete _selectptrleft;
+	delete _selectptrright;
+    }
+
     bool select(Select* selectptrleft, Select* selectptrright, int row) const
     {
         if ((selectptrleft->select(selectptrleft->getSpreadsheet(), row) == true) ||
