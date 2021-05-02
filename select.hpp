@@ -66,7 +66,7 @@ private:
 	Select* n_s = nullptr;
 public:
 	Select_Not(const Select* s):
-		
+		n_s = s;	
 	{
 	}
 	virtual bool select(const std::string& s) const {
