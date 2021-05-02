@@ -78,6 +78,7 @@ public:
             select(sheet->cell_data(i, this->columnindex)); // query each row to see if it should be selected
             // ??? do more stuff ???
         }
+        _sheet == nullptr;
 
     }
 

@@ -61,7 +61,6 @@ sheet.set_selection(
     std::cout << std::endl;
 
     sheet.clear();
- 
 
     return 0;
 }
