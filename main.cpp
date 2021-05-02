@@ -49,15 +49,16 @@ sheet.set_selection(
     std::cout << std::endl;
 
     // Sample usage 3
-    // sheet.set_selection(
-    //     new Select_Or(
-    //         new Select_Contains(&sheet,"First","Amanda"),
-    //         new Select_Or(
-    //             new Select_Contains(&sheet,"Last","on"),
-    //             new Select_Contains(&sheet,"Age","9"))));
+    std::cout << "CONTAINS EITHER FIRST NAME AMANDA OR, CONTAINS ON IN LAST / IS AGE 9" << std::endl;
+     sheet.set_selection(
+         new Select_Or(
+             new Select_Contains(&sheet,"First","Amanda"),
+             new Select_Or(
+                 new Select_Contains(&sheet,"Last","on"),
+                 new Select_Contains(&sheet,"Age","9"))));
 
-    /*sheet.print_selection(std::cout);
-    std::cout << std::endl;*/
+    sheet.print_selection(std::cout);
+    std::cout << std::endl;
 
     return 0;
 }
