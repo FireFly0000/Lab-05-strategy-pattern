@@ -1,5 +1,6 @@
 #include "spreadsheet.hpp"
 #include "select.hpp"
+#include <string>
 
 #include <algorithm>
 #include <iostream>

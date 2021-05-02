@@ -33,9 +33,6 @@ public:
     {
         return select(sheet->cell_data(row, column));
     }
-    int get_column(){
-	return column;
-    }
 
     // Derived classes can instead implement this simpler interface.
     virtual bool select(const std::string& s) const = 0;
@@ -48,17 +45,42 @@ private:
 	//string col;
 	std::string r_data;
 public:
-Select_Contains(const Spreadsheet* sheet, const std::string col, const std::string row):
-	Select_Column::Select_Column(sheet, col),
-	r_data(row)
-{
-}
-virtual bool select(const std::string& s) const {
-	if(s == r_data){
-		return true;
+	Select_Contains(const Spreadsheet* sheet, const std::string col, const std::string row):
+		Select_Column::Select_Column(sheet, col),
+		r_data(row)
+	{
 	}
-	else return false;
-}		
+	/*virtual bool select(const Spreadsheet* sheet, int row) const{
+		return select(sheet->cell_data(row, column));
+	}*/
+	virtual bool select(const std::string& s) const {
+		if(s.find(r_data)!= std::string::npos){
+			return true;
+		}	
+		else return false;
+	}		
 };
+
+class Select_Not: public Select_Column{
+private:
+	std::string r_data;
+public:
+	Select_Not(const Spreadsheet* sheet, const std::string col, const std::string row):
+		Select_Column::Select_Column(sheet, col),
+		r_data(row)
+	{
+	}
+	virtual bool select(const std::string& s) const {
+		if(s.find(r_data) != std::string::npos){
+			return false;
+		}
+		else return true;
+        }
+};
+
+
+
+
+
 
 #endif //__SELECT_HPP__
