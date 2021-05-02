@@ -58,7 +58,7 @@ void Spreadsheet::add_row(const std::vector<std::string>& row_data)
 
 int Spreadsheet::get_column_by_name(const std::string& name) const
 {
-    for (int i = 0; i < column_names.size(); i++)
+    for (unsigned i = 0; i < column_names.size(); i++)
         if (column_names.at(i) == name)
             return i;
     return -1;

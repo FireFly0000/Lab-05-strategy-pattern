@@ -60,5 +60,8 @@ sheet.set_selection(
     sheet.print_selection(std::cout);
     std::cout << std::endl;
 
+    sheet.clear();
+ 
+
     return 0;
 }

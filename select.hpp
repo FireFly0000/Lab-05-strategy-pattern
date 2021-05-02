@@ -73,7 +73,7 @@ public:
         this->column = column;
         this->columnindex = sheet->get_column_by_name(column);
         this->_sheet = sheet;
-        for (int i = 0; i < sheet->getnumRows(); ++i) // start at 1st row after column names, end once final roww has been reached. Not sure if gets correct size.
+        for (int i = 0; i < sheet->getnumRows(); ++i) // iterates through each row 
         {
             select(sheet->cell_data(i, this->columnindex)); // query each row to see if it should be selected
             // ??? do more stuff ???
