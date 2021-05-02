@@ -63,11 +63,10 @@ public:
 
 class Select_Not: public Select_Column{
 private:
-	std::string r_data;
+	Select* n_s = nullptr;
 public:
-	Select_Not(const Spreadsheet* sheet, const std::string col, const std::string row):
-		Select_Column::Select_Column(sheet, col),
-		r_data(row)
+	Select_Not(const Select* s):
+		
 	{
 	}
 	virtual bool select(const std::string& s) const {
