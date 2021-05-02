@@ -32,7 +32,7 @@ public:
 
     // TODO: Implement print_selection.
     void print_selection(std::ostream& out) const;
-   
+
 
     int getnumRows() {
         return this->data.size();

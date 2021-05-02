@@ -52,6 +52,9 @@ protected:
     Spreadsheet* _sheet;
 
 public:
+   ~Select_Contains() {
+        _sheet = nullptr;
+    }
     bool select(const std::string& s) const
     {
         if (s.find(_userstring) != std::string::npos) { // if _userstring is a substring of s, then select returns true
@@ -78,7 +81,8 @@ public:
             select(sheet->cell_data(i, this->columnindex)); // query each row to see if it should be selected
             // ??? do more stuff ???
         }
-        _sheet == nullptr;
+        //_sheet = nullptr;
+        
 
     }
 
@@ -104,6 +108,10 @@ protected:
     Select* _selectptr;
 
 public:
+    ~Select_Not() {
+        _sheet = nullptr;
+        _selectptr = nullptr;
+    }
     bool select(const std::string& s) const
     {
         if (s.find(_userstring) == std::string::npos) { // if _userstring is not a substring of s, then select returns true
@@ -130,13 +138,13 @@ public:
     //}
 
     Select_Not(Select* selectptr) {
-        
+
         this->_selectptr = selectptr;
         this->_userstring = selectptr->getString();
         this->_sheet = selectptr->getSpreadsheet();
         this->_column = selectptr->getColumn();
         this->columnindex = _sheet->get_column_by_name(selectptr->getColumn());
-        
+
         for (int i = 0; i < _sheet->getnumRows(); ++i) {
             select(_sheet->cell_data(i, this->columnindex));
         }
@@ -163,9 +171,14 @@ protected:
     Select* _selectptrright;
 
 public:
+    ~Select_And() {
+        _sheet = nullptr;
+        _selectptrleft = nullptr;
+        _selectptrright = nullptr;
+    }
     bool select(Select* selectptrleft, Select* selectptrright, int row) const
     {
-        if ((selectptrleft->select(selectptrleft->getSpreadsheet(), row) == true) && 
+        if ((selectptrleft->select(selectptrleft->getSpreadsheet(), row) == true) &&
             ((selectptrright->select(selectptrright->getSpreadsheet(), row) == true))) { // if both pointers return true, return true.
             return true;
         }
@@ -173,8 +186,8 @@ public:
             return false;
         }
     }
-    
-    
+
+
     bool select(const Spreadsheet* sheet, int row) const {
 
         return select(this->_selectptrleft, this->_selectptrright, row);
@@ -189,7 +202,7 @@ public:
         this->_column = selectptrleft->getColumn();
         this->columnindex = _sheet->get_column_by_name(selectptrleft->getColumn());
 
-        for (int i = 0; i < _sheet->getnumRows(); ++i) 
+        for (int i = 0; i < _sheet->getnumRows(); ++i)
         {
             select(selectptrleft, selectptrright, i);
         }
@@ -216,6 +229,11 @@ protected:
     Select* _selectptrright;
 
 public:
+    ~Select_Or() {
+        _sheet = nullptr;
+        _selectptrleft = nullptr;
+        _selectptrright = nullptr;
+    }
     bool select(Select* selectptrleft, Select* selectptrright, int row) const
     {
         if ((selectptrleft->select(selectptrleft->getSpreadsheet(), row) == true) ||
