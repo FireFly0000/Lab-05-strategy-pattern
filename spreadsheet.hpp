@@ -30,8 +30,13 @@ public:
     void set_selection(Select* new_select);
 
     // TODO: Implement print_selection.
-    void print_selection(std::ostream& out) const;
+    void print_selection(std::ostream& out) const
+    {
 
+    }
+    int getnumRows() {
+        return this->data.size();
+    }
     void clear();
     void set_column_names(const std::vector<std::string>& names);
     void add_row(const std::vector<std::string>& row_data);
