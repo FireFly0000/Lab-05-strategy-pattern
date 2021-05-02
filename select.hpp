@@ -33,9 +33,32 @@ public:
     {
         return select(sheet->cell_data(row, column));
     }
+    int get_column(){
+	return column;
+    }
 
     // Derived classes can instead implement this simpler interface.
     virtual bool select(const std::string& s) const = 0;
+};
+
+//this is Select_Contains class
+class Select_Contains: public Select_Column
+{
+private:
+	//string col;
+	std::string r_data;
+public:
+Select_Contains(const Spreadsheet* sheet, const std::string col, const std::string row):
+	Select_Column::Select_Column(sheet, col),
+	r_data(row)
+{
+}
+virtual bool select(const std::string& s) const {
+	if(s == r_data){
+		return true;
+	}
+	else return false;
+}		
 };
 
 #endif //__SELECT_HPP__
