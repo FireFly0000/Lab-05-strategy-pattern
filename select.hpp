@@ -92,7 +92,7 @@ public:
     }
 
 };
-// WORK IN PROGRESS!!
+
 class Select_Not : public Select
 {
 protected:
@@ -151,38 +151,57 @@ public:
     }
 };
 
-//class Select_And : public Select
-//{
-//protected:
-//    Select* _leftop;
-//    Select* _rightop;
-//
-//public:
-//    bool select(const std::string& s) const
-//    {
-//        if ((_leftop->select()) == true) && ((_rightop->select()) == true) { // if both select conditions return true, return true.
-//            return true;
-//        }
-//        else {
-//            return false;
-//        }
-//    }
-//
-//    bool select(const Spreadsheet* sheet, int row) const {
-//        return select(sheet->cell_data(row, this->column));
-//    }
-//
-//    Select_And(Select* leftop, Select* rightop)
-//    {
-//        _leftop = leftop;
-//        _rightop = rightop;
-//
-//        for (int i = 0; i < sheet->getnumRows(); ++i)
-//        {
-//            select(sheet->cell_data(i, this->column));
-//        }
-//
-//    }
-//
-//};
+class Select_And : public Select
+{
+protected:
+    int columnindex;
+    std::string _column;
+    std::string _userstring;
+    Spreadsheet* _sheet;
+    Select* _selectptrleft;
+    Select* _selectptrright;
+
+public:
+    bool select(Select* selectptrleft, Select* selectptrright, int row) const
+    {
+        if ((selectptrleft->select(selectptrleft->getSpreadsheet(), row) == true) && 
+            ((selectptrright->select(selectptrright->getSpreadsheet(), row) == true))) { // if both pointers return true, return true.
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    
+    bool select(const Spreadsheet* sheet, int row) const {
+
+        return select(this->_selectptrleft, this->_selectptrright, row);
+    }
+
+    Select_And(Select* selectptrleft, Select* selectptrright) {
+
+        this->_selectptrleft = selectptrleft;
+        this->_selectptrright = selectptrright;
+        this->_userstring = selectptrleft->getString();
+        this->_sheet = selectptrleft->getSpreadsheet();
+        this->_column = selectptrleft->getColumn();
+        this->columnindex = _sheet->get_column_by_name(selectptrleft->getColumn());
+
+        for (int i = 0; i < _sheet->getnumRows(); ++i) 
+        {
+            select(selectptrleft, selectptrright, i);
+        }
+    }
+    std::string getString() {
+        return this->_userstring;
+    }
+    std::string getColumn() {
+        return this->_column;
+    }
+    Spreadsheet* getSpreadsheet() {
+        return this->_sheet;
+    }
+};
+
 #endif //__SELECT_HPP__
