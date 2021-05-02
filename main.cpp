@@ -1,6 +1,5 @@
-#include "spreadsheet.hpp"
 #include "spreadsheet.cpp"
-#include "select.hpp"
+
 
 #include <iostream>
 
@@ -22,15 +21,15 @@ int main(int argc, char* argv[])
     std::cout << std::endl;
 
     //Sample usage 1
-    sheet.set_selection(new Select_Contains(&sheet,"Last","Dole"));
+    //sheet.set_selection(new Select_Contains(&sheet,"Last","Dole"));
     
-    sheet.print_selection(std::cout);
-    std::cout << std::endl;
+    //sheet.print_selection(std::cout);
+    //std::cout << std::endl;
     
     //Select_Not test
-    sheet.set_selection(new Select_Not(&sheet,"Last","Dole"));
-    sheet.print_selection(std::cout);
-    std::cout << std::endl;
+    //sheet.set_selection(new Select_Not(&sheet,"Last","Dole"));
+    //sheet.print_selection(std::cout);
+    //std::cout << std::endl;
 
     // Sample usage 2
     // sheet.set_selection(

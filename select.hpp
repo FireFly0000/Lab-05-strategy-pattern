@@ -39,7 +39,9 @@ public:
 };
 
 //this is Select_Contains class
-class Select_Contains: public Select_Column
+
+
+/*class Select_Contains: public Select_Column
 {
 private:
 	//string col;
@@ -50,9 +52,9 @@ public:
 		r_data(row)
 	{
 	}
-	/*virtual bool select(const Spreadsheet* sheet, int row) const{
-		return select(sheet->cell_data(row, column));
-	}*/
+	//virtual bool select(const Spreadsheet* sheet, int row) const{
+		//return select(sheet->cell_data(row, column));
+	//}
 	virtual bool select(const std::string& s) const {
 		if(s.find(r_data)!= std::string::npos){
 			return true;
@@ -76,7 +78,7 @@ public:
 		}
 		else return true;
         }
-};
+};*/
 
 
 
