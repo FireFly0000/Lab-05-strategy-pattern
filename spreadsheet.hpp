@@ -34,7 +34,7 @@ public:
     void print_selection(std::ostream& out) const
     {
         if (select == nullptr) {
-            for (unsigned i = 1; i < data.size(); ++i) {
+            for (unsigned i = 0; i < data.size(); ++i) {
                 for (unsigned j = 0; j < column_names.size(); ++j) {
                     out << data.at(i).at(j) << " ";
                 }
