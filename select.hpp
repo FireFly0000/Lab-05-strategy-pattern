@@ -81,4 +81,45 @@ public:
 
 };
 
+
+// WORK IN PROGRESS!!
+class Select_Not : public Select
+{
+protected:
+    int column;
+    std::string _userstring;
+
+public:
+    bool select(const std::string& s) const
+    {
+        if (s.find(_userstring) == std::string::npos) { // if _userstring is not a substring of s, then select returns true
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    bool select(const Spreadsheet* sheet, int row) const {
+        return select(sheet->cell_data(row, this->column));
+    }
+
+    Select_Not(Spreadsheet* sheet, std::string column, std::string userstring)
+    {
+        //sheet->set_selection(nullptr); // clear selections, probably not needed here.
+        this->_userstring = userstring;
+        this->column = sheet->get_column_by_name(column);
+        for (int i = 0; i < sheet->getnumRows(); ++i) // start at 1st row after column names, end once final roww has been reached. Not sure if gets correct size.
+        {
+            select(sheet->cell_data(i, this->column)); // query each row to see if it should be selected
+            // ??? do more stuff ???
+        }
+
+    }
+
+
+};
+
+
+
 #endif //__SELECT_HPP__
