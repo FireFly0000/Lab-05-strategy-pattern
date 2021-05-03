@@ -3,6 +3,7 @@
 
 #include <string>
 #include <cstring>
+#include <iostream>
 
 class Select
 {
@@ -33,8 +34,10 @@ public:
     
     Select_Column(){ }
     virtual bool select(const Spreadsheet* sheet, int row) const
-    {
-        return select(sheet->cell_data(row, column));
+    {  	if (column == -1){
+		return false;
+	}
+	else return select(sheet->cell_data(row, column));
     }
 
     // Derived classes can instead implement this simpler interface.

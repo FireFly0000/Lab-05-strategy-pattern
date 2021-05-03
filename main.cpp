@@ -53,7 +53,15 @@ int main(int argc, char* argv[])
 
     sheet.print_selection(std::cout);
     std::cout << std::endl;
+    
+    sheet.set_selection(
+	new Select_And(
+		new Select_Not(new Select_Contains(&sheet, "Age", "9")),
+		new Select_Not(new Select_Contains(&sheet, "Lasr", "Dole"))));    
 
+    sheet.print_selection(std::cout);
+    std::cout << std::endl;
+	
     return 0;
 }
 
