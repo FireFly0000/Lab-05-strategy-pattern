@@ -79,7 +79,10 @@ public:
 	}
 	
 	bool select(const Spreadsheet* sheet, int row) const {
-        	return select(sheet->cell_data(row,t->getCol()));
+        	if (t->getCol() == -1){
+			return false;
+		}
+		else return select(sheet->cell_data(row,t->getCol()));
     	}	
 	bool select(const std::string& s) const { 
 		if(t->select(s)){
