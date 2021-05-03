@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
     std::cout << std::endl;
 
     //Sample usage 3
-   /*sheet.set_selection(
+   sheet.set_selection(
         new Select_Or(
              new Select_Contains(&sheet,"First","Amanda"),
              new Select_Or(
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
                  new Select_Contains(&sheet,"Age","9"))));
 
     sheet.print_selection(std::cout);
-    std::cout << std::endl;*/
+    std::cout << std::endl;
 
     return 0;
 }

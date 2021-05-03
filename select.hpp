@@ -11,8 +11,6 @@ public:
 
     // Return true if the specified row should be selected.
     virtual bool select(const Spreadsheet* sheet, int row) const = 0;
-    //virtual int getColid() const = 0;
-    //virtual std::string getR_data() const = 0;
 
 };
 
@@ -41,26 +39,18 @@ public:
 
     // Derived classes can instead implement this simpler interface.
     virtual bool select(const std::string& s) const = 0;
-    //virtual bool L_select(const Spreadsheet* sheet, int row) const = 0;
-    //virtual bool R_select(const Spreadsheet* sheet, int row) const = 0;
-    //virtual std::string getString() = 0;
     virtual int getCol() = 0;
-    //virtual Spreadsheet* getSheet() = 0;	
 };
 
 //this is Select_Contains class
 class Select_Contains: public Select_Column
 {
 protected:
-	//int row;
-	//int _col;
-	Spreadsheet* sheet;
 	std::string r_data;
 public:
 	Select_Contains(Spreadsheet* sheet, const std::string& col, const std::string& row){
 		column = sheet->get_column_by_name(col);
 		r_data = row;
-		this->sheet = sheet;
 	}
 	bool select(const std::string& s) const {
 		if(s.find(r_data)!= std::string::npos){
@@ -70,10 +60,7 @@ public:
 	} 
 	virtual int getCol(){
 		return this->column;
-	}
-	//virtual Spreadsheet* getSheet() {
-		//return this->sheet;
-	//}		
+	}		
 };
 
 class Select_Not: public Select_Column
@@ -117,19 +104,19 @@ public:
 		rt = sr;
         }
 
-       bool select(const Spreadsheet* sheet, int row) const {
-		return 
+       virtual bool select(const Spreadsheet* sheet, int row) const {
+		return (lt->select(sheet, row) && rt->select(sheet, row) );
        }
        virtual bool select(const std::string& s) const {
-		return( lt->select(s) && rt->select(s));
+		return true;
 	
-        }
+       }
 	virtual int getCol(){
 		return -1;
 	}
 };
 
-/*class Select_Or: public Select_Column
+class Select_Or: public Select_Column
 {
 private:
         Select_Column* lt = nullptr;
@@ -144,22 +131,15 @@ public:
                 rt = sr;
         }
 
-        bool select(const Spreadsheet* sheet, int row) const {
-                return( (lt->select(sheet->cell_data(row,lt->getCol()))) || (rt->select(sheet->cell_data(row,rt->getCol()))) );
+        virtual bool select(const Spreadsheet* sheet, int row) const {
+                return( lt->select(sheet, row) || rt->select(sheet, row));
        	}
        	virtual bool select(const std::string& s) const {
-                return (lt->select(s) || rt->select(s));
+                return true;
         }
-	virtual int L_getCol(){
-                return lt->getCol();
-        }
-        virtual int R_getCol(){
-                return rt->getCol();
-        }
-
-        virtual int getCol(){
-               	return rt->getCol();
-       	}
-};*/
+	virtual int getCol(){
+		return -1;
+	}
+};
 
 #endif //__SELECT_HPP__
